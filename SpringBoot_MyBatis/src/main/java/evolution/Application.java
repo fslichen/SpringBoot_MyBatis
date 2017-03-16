@@ -14,7 +14,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import evolution.entity.City;
 import evolution.mapper.CityMapper;
 
-@SpringBootApplication
+@SpringBootApplication// Automatically scans mappers.
 public class Application implements CommandLineRunner {
 	@Autowired
 	private CityMapper cityMapper;
@@ -29,7 +29,7 @@ public class Application implements CommandLineRunner {
 		System.out.println(city);
 	}
 
-	@Bean
+	@Bean// Detects DataSource
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
@@ -44,7 +44,7 @@ public class Application implements CommandLineRunner {
 		return new DataSourceTransactionManager(dataSource());
 	}
 	
-	@Bean
+	@Bean// Creates and registers an instance of a SqlSessionFactoryBean passing the DataSource as an input.
 	public SqlSessionFactoryBean sqlSessionFactory() throws Exception {     
 		SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
 		sessionFactory.setDataSource(dataSource());
