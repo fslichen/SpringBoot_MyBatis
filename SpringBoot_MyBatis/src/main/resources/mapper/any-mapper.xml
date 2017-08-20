@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="evolution.mapper.AnyMapper">
+	<resultMap id="anyResultMap" type="java.util.Map">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+	</resultMap>
+	<select id="findAll" resultMap="anyResultMap">
+		select * from any_table
+	</select>
+	<!-- resultType="evolution.entity.AnyEntity" can be simplified to resultType="AnyEntity" thanks to type-aliases-package. -->
+	<select id="findById" parameterType="java.lang.Long" resultType="AnyEntity">
+		select * from any_table where id=#{id}
+	</select>
+	<insert id="insertInBatch" parameterType="java.util.List">
+		insert into any_table(name) values
+		<foreach collection="list" item="anyEntity" open="(" separator="),(" close=")">
+			 #{anyEntity.name}
+		</foreach>
+	</insert>
+	<insert id="insert" parameterType="AnyEntity">
+		insert into any_table(name) values(#{name})
+	</insert>
+</mapper>
